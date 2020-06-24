@@ -1,5 +1,9 @@
+# List to hold the list of movies. Would like to move it into the code somewhere.
 movieList = []
 
+# Function to get user input for user details. This information is not yet used,
+# but plans to use it when saving the movie list are in the works. Also, this
+# information is being collected for later when I begin learning ML.
 def getInput(item):
     if item == "firstName":
         firstName = input("What is your first name: ")
@@ -24,10 +28,12 @@ def getInput(item):
                 gender = input("Please enter either (M)ale or (F)emale: ")[0].upper()
                 continue
 
+# Function to add a movie to list. Needs check for duplicate.
 def addMovie(movie):
     movieList.append(movie)
     print("Movie added successfully.")
 
+# Function to remove a movie from the list. Needs ability to remove by name.
 def delMovie(movie):
     if movie > len(movieList):
         print("Sorry. That is not a valid selection.")
@@ -40,10 +46,12 @@ def delMovie(movie):
         movieList.remove(movieDictionary[movie])
         print("Movie successfully removed.")
 
+# Function to clear entire movie list. Needs user confirmation check.
 def clearMovies():
     movieList.clear()
     print("Movie list cleared.")
 
+# Function to list the movies.
 def listMovies():
     movieCount = 0
     word1 = "are"
@@ -57,12 +65,18 @@ def listMovies():
         movie = movieList[movieCount - 1]
         print(f"{movieCount}: {movieList[movieCount - 1].title()}")
 
+# Function to save list. Needs overwrite check. Also could use try/except.
 def save(fileName):
-    with open(fileName, "w") as f:
-        for movie in movieList:
-            f.write(movie + "\n")
-    print("File saved successfully.")
+    try:
+        with open(fileName, "w") as f:
+            for movie in movieList:
+                f.write(movie + "\n")
+        print("File saved successfully.")
+    except IOError:
+        print("There was an error saving the file.")
+        return
 
+# Function to load file.
 def load(fileName):
     try:
         with open(fileName, "r") as f:
@@ -75,7 +89,7 @@ def load(fileName):
         print("There was an error opening the file.")
         return
 
-
+# Function that runs the program. Need to change to main().
 def run():
     firstName = getInput("firstName")
     lastName = getInput("lastName")
@@ -109,11 +123,3 @@ def run():
             continue
 
 run()
-
-movieList = []
-with open("movies.txt", "r") as f:
-    movie = f.readline().strip()
-    while movie:
-        movieList.append(movie)
-        movie = f.readline().strip()
-    print(movieList)
